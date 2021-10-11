@@ -1,0 +1,40 @@
+{
+  "name": "vue-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "node ./node/src/index.js",
+    "start": "npm run serve & webpack serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^5.2.6",
+    "html-webpack-plugin": "^4.5.2",
+    "less": "^4.1.1",
+    "less-loader": "^9.0.0",
+    "style-loader": "^2.0.0",
+    "svg-sprite-loader": "^6.0.7",
+    "vue-loader": "^15.9.7",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^5.36.2",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "highlight": "^0.2.4",
+    "highlight.js": "^11.0.1",
+    "iview": "^3.5.4",
+    "markdown": "^0.5.0",
+    "markdown-it": "^12.0.6",
+    "markdown-it-highlightjs": "^3.5.0",
+    "vue": "^2.6.12",
+    "vue-router": "^3.5.1",
+    "vuedraggable": "^2.24.3",
+    "vuex": "^3.6.2"
+  }
+}

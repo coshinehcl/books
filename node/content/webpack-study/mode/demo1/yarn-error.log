@@ -1,0 +1,51 @@
+Arguments: 
+  /usr/local/bin/node /Users/huchunlin/.npm-global/bin/yarn add webpack-cli -D
+
+PATH: 
+  /Users/huchunlin/.oh-my-zsh/custom/plugins/git-open:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/huchunlin/.oh-my-zsh/custom/plugins/git-open:/Users/huchunlin/.npm-global/bin:/Users/huchunlin/bin:/Applications/code.app/Contents/Resources/app/bin:/Applications/iTerm.app/Contents/MacOS:/Users/huchunlin/.npm-global/bin:/Users/huchunlin/bin:/Applications/code.app/Contents/Resources/app/bin:/Applications/iTerm.app/Contents/MacOS
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  14.16.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: https://fs-npm.tuhu.cn/webpack: Request "https://fs-npm.tuhu.cn/webpack" returned a 403
+      at Request.params.callback [as _callback] (/Users/huchunlin/.npm-global/lib/node_modules/yarn/lib/cli.js:66997:18)
+      at Request.self.callback (/Users/huchunlin/.npm-global/lib/node_modules/yarn/lib/cli.js:140662:22)
+      at Request.emit (events.js:315:20)
+      at Request.<anonymous> (/Users/huchunlin/.npm-global/lib/node_modules/yarn/lib/cli.js:141634:10)
+      at Request.emit (events.js:315:20)
+      at Gunzip.<anonymous> (/Users/huchunlin/.npm-global/lib/node_modules/yarn/lib/cli.js:141556:12)
+      at Object.onceWrapper (events.js:421:28)
+      at Gunzip.emit (events.js:315:20)
+      at endReadableNT (internal/streams/readable.js:1327:12)
+      at processTicksAndRejections (internal/process/task_queues.js:80:21)
+
+npm manifest: 
+  {
+    "name": "mode",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "export NODE_ENV=production webpack"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "webpack": "^5.44.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

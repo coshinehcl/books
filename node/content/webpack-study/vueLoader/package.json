@@ -1,0 +1,25 @@
+{
+  "name": "vueLoader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vue/compiler-sfc": "^3.2.4",
+    "html-webpack-plugin": "^5.3.2",
+    "vue": "^2.6.14",
+    "vue-loader": "^15.9.7",
+    "webpack": "^5.50.0"
+  },
+  "devDependencies": {
+    "css-loader": "^6.2.0",
+    "style-loader": "^3.2.1",
+    "vue-template-compiler": "^2.6.14"
+  }
+}

@@ -1,0 +1,1 @@
+import a from './module/2.js'
