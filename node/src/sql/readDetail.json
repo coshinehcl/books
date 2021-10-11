@@ -10,8 +10,8 @@
     "desc": "选项默认值"
   },
   "commander.home": {
-    "visitTimes": 9,
-    "updateTime": "2021-10-11T08:18:17.415Z",
+    "visitTimes": 10,
+    "updateTime": "2021-10-11T08:26:43.245Z",
     "desc": "首页"
   },
   "commander.options.demo5": {
@@ -30,13 +30,13 @@
     "desc": "变长参数"
   },
   "commander.options.demo1": {
-    "visitTimes": 10,
-    "updateTime": "2021-10-11T08:18:17.419Z",
+    "visitTimes": 11,
+    "updateTime": "2021-10-11T08:26:44.432Z",
     "desc": "选项"
   },
   "commander.command.demo1": {
-    "visitTimes": 9,
-    "updateTime": "2021-10-11T08:18:17.369Z",
+    "visitTimes": 10,
+    "updateTime": "2021-10-11T08:26:43.869Z",
     "desc": "命令command"
   },
   "babel.ast": {

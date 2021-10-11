@@ -1,9 +1,8 @@
 # dependencies  npm包文件
-/node_modules
-/**/node_modules
+**node_modules
 
 # sql数据
-/**/sql
+node/src/sql
 
 # production  打包文件
 /build
