@@ -1,0 +1,1 @@
+console.log('登出',process.argv)

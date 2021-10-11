@@ -1,0 +1,1 @@
+console.log('登录',process.argv)
