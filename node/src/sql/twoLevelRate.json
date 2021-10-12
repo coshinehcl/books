@@ -1,0 +1,11 @@
+{
+    "_desc":"这里是配置不同一级菜单下的二级菜单的比重，排序顺序，不用考虑home,home默认100",
+    "commander":{
+        "command":90,
+        "argument":80,
+        "options":70,
+        "version":60,
+        "action":50,
+        "others":40
+    }
+}

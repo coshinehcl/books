@@ -1,0 +1,1 @@
+console.log('logout callee',process.argv)
