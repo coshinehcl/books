@@ -11,7 +11,7 @@ program
 // 变长参数，截止到解析到下一个选项前（‘-’或‘--’）
 ```
 
-# 三、测试
+## 二、测试
 ```js
 const { program } = require('commander');
 // boolen选项
@@ -38,7 +38,7 @@ console.log(options)
 // 输出 { pizzaType: 123, cheese: [ 'a', 'b', 'c' ] }
 ```
 
-# 四、总结
+## 三、总结
 1、可变参数，可以让接收参数的选项，可以接收多个参数
 2、解析后会以数组形式存储在对应属性字段中
 ![avatar](1.png)

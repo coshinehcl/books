@@ -13,7 +13,7 @@
 ```
 
 ```js
-// 创建命令的方式
+// 创建子命令的方式
 // 方式一：普通方式
 program
   .command('clone <source> [destination]')
@@ -32,6 +32,12 @@ childCommand = new commander.Command()
     });
 program.addCommand(childCommand)
 // 返回顶层命令，以供继续配置
+
+// 方式三、通过独立的的可执行文件实现命令
+program
+  .command('start <service>', 'start named service')
+  .command('stop [service]', 'stop named service, or all if no name supplied');
+// 此时，描述通过第二个参数带进去，如果是这样，则action会自动执行外部的。不需要后续跟着配置
 ```
 
 ```js
@@ -66,4 +72,11 @@ const child2_2Command = child1Command
 //          child1Command
 //             ↙︎       ↘︎
 //  child2_1Command    child2_2Command
+```
+
+## 二、总结
+
+```js
+// 这里主要是描述命令的层级概念
+// 以及注册子命令的几种方式，这个在demo2会重点介绍
 ```

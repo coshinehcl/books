@@ -1,67 +1,8 @@
-# addOption方式配置选项
+# 自定义选项处理
 
 ## 一、概念
-除了传统的配置，我们还可以通过addOption的方式来配置。可以更好的控制我们要的配置
-
-## 二、语法
-
 ```js
-// 传统方式配置选项
-program.option('-d, --debug', 'output extra debugging')
-
-// addOption方式配置选项
-program.addOption(new Option('-s, --secret').hideHelp())
-```
-
-## 三、测试
-
-```js
-const { program,Option } = require('commander');
-// new 方式配置选项
-program.addOption(new Option('-s, --secret').hideHelp())
-.addOption(new Option('-s, --secret').hideHelp())
-.addOption(new Option('-t, --timeout <delay>', 'timeout in seconds').default(60, 'one minute'))
-.addOption(new Option('-d, --drink <size>', 'drink cup size').choices(['small', 'medium', 'large']))
-.addOption(new Option('-p, --port <number>', 'port number').env('PORT'))
-.parse(process.argv)
-console.log('Options: ', program.opts());
-```
-
-```js
-// 测试
-
-// 输入 node src/index.js -h
-// 输出  // 略
-// 总结 '-s, --secret' 选项在help中不会提示出来了！！！hideHelp起作用了
-
-// 输入 node src/index.js -t
-// 输出  Options:  { timeout: 60 }
-// 总结 default 设置默认值起作用了
-
-// 输入 node src/index.js -d xx
-// 输出 error: option '-d, --drink <size>' argument 'xx' is invalid. Allowed choices are small, medium, large.
-// 总结 choices只能在指定中选项，起作用了
-
-// 更多方法，参考下文拓展部分，或者看Option源码
-```
-
-## 四、总结
-
-```js
-// 由上可知
-new Option('-短选项名, --长选项名 [参数]','描述')
-// 会创建一个普通的选项
-// 但是后续可以接方法，进而对选项改造成特殊的选项。
-```
-
-## 五、拓展
-
-```js
-// 测试
-
-// 打印new Option('-短选项名, --长选项名 [参数]','描述')
-// 会发现，打印出来的是以下对象
-
+// 我们回顾下选项的配置
 {
   flags: '-d, --drink <size>',
   description: 'drink cup size',
@@ -75,11 +16,83 @@ new Option('-短选项名, --长选项名 [参数]','描述')
   defaultValue: undefined,
   defaultValueDescription: undefined,
   envVar: undefined,
-  parseArg: [Function (anonymous)],
+  parseArg: [Function (anonymous)], // 本节重点
   hidden: false,
   argChoices: [ 'small', 'medium', 'large' ]
 }
 
-// 也就是选项，有这些属性，我们前面的配置，以及这里的new Option()都是为了生成这个配置。
-// 认真看下这个配置的属性，也就明白了选项的配置了
+// 也就是选项可以输入多次，parseArg就是用于解析当前或后续本选项的，处理后，得到最终的value
+// 可以做什么
+// 由上描述，可知
+// 1、单次选项解析时，处理当前参数（格式化、提示）
+//  如：格式化：parseInt/parseFloat/或自定义的foramtValue
+//     提示：如输入不对，等
+// 2、多次本选项解析时，还可以拿到上次的value。进而可以叠加处理，也就是拿到了所有的本选项参数，进而可以（格式化，提示）
+//  如：格式化：=>[] / 统计选项输入的次数 / 或自定义的骚操作
+//     提示：如输入不对，根据前面输入判断第n次输入不符合要求等
 ```
+
+## 二、测试
+这里用传统配置方式和new方式配置的，都来看下效果
+```js
+const { program,Option,InvalidArgumentError } = require('commander');
+
+function myParseInt(value, dummyPrevious) {
+    const parsedValue = parseInt(value, 10);
+    if (isNaN(parsedValue)) {
+      throw InvalidArgumentError('Not a number.');
+    }
+    return parsedValue;
+}
+function increaseVerbosity(dummyValue, previous) {
+    return previous + 1;
+}
+function collect(value, previous) {
+    return previous.concat([value]);
+}
+function commaSeparatedList(value, dummyPrevious) {
+    return value.split(',');
+}
+// 传统方式配置
+// program
+//   .option('-i, --integer <number>', 'integer argument', myParseInt)
+//   .option('-v, --verbose', 'verbosity that can be increased', increaseVerbosity, 0)
+//   .option('-c, --collect <value>', 'repeatable value', collect, [])
+//   .option('-l, --list <items>', 'comma separated list', commaSeparatedList)
+// ;
+
+// new 方式配置（和上面传统方式是一样的，这里只是为了更好的理解demo5）
+program
+  .addOption(new Option('-i, --integer <number>', 'integer argument').argParser(myParseInt))
+  .addOption(new Option('-v, --verbose', 'verbosity that can be increased').argParser(increaseVerbosity).default(0,'默认值'))
+  .addOption(new Option('-c, --collect <value>', 'repeatable value').argParser(collect).default([],'默认值'))
+  .addOption(new Option('-l, --list <items>', 'comma separated list').argParser(commaSeparatedList))
+
+program.parse();
+const options = program.opts();
+console.log(options)
+
+// Try the following:
+//    node options-custom-processing --integer 2
+//    node options-custom-processing --list x,y,z
+//    node options-custom-processing -v -v -v
+//    node options-custom-processing -c a -c b -c c
+```
+```js
+// 测试
+
+// 测试单次输入的效果
+// 输入 node src/index.js -i 12a
+// 输出 { collect: [], integer: 12 }
+// 输入 node src/index.js -l 1,2,3 
+// 输出 { collect: [], list: [ '1', '2', '3' ] }
+
+// 测试输入多次本选项的处理效果
+// 输入 node src/index.js -v -v -v 
+// 输出 { collect: [], verbose: 3 }
+// 输入 node src/index.js -c 1 -c 12 -c 13
+// 输出 { collect: [ '1', '12', '13' ] }
+```
+
+## 三、总结
+用于解析当前参数或多次本选项的参数，得到最终的本选项值，具体技巧和用途见本文概念部分。

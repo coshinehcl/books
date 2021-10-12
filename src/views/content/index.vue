@@ -2,6 +2,7 @@
     <div @click="globalClickHandle">
         <div v-html="menuList"></div>
         <div id="content" class="content" v-html="content"></div>
+        <div data-info='{"type":"top"}' class="to-top">Top</div>
     </div>
 </template>
 <script>
@@ -70,124 +71,144 @@ export default {
             })
         },
         generatorMenu(){
-           const memu = {
+           const menu = {
                list:[],
                currentLevel:1 // 支持从hn开始
            };
            let index = 0;
-           // h1...h5    
-           [1,2,3,4,5].forEach(i => this.generatorMenuBody(memu,`h${i}`))
-           // 更新文档
-           this.renderContent = this.newContent;    
+           // h1...h3
+           // 这边要求文档，严格要求h1...h3格式嵌套来使用，这边才好解析
+           [1,2,3].forEach(i => this.generatorMenuBody(menu,i))
+            console.log('menu.list',menu.list)
            // 根据menu生成内容
-           const menuList = memu.list.reduce((total,level1)=> {
+           const menuList = menu.list.reduce((total,level1)=> {
+               const getDataInfo = (item) => {
+                   return `${JSON.stringify({tag:item.tag,tagIndex:item.tagIndex,type:'query'})}`
+               }
                if(level1.children.length) {
-                    total +=`<div class="content-menu-level1">${level1.content}</div>`
+                    total +=`<div class="content-menu-item content-menu-level1" data-info=${getDataInfo(level1)}>${level1.content}</div>`
                     level1.children.forEach(level2 => {
                         if(level2.children.length) {
-                            total +='<div>'
-                            total +=`<div classs="content-menu-level2">${level2.content}</div>`
+                            total +='<div>';
+                            total +=`<div class="content-menu-item content-menu-level2" data-info=${getDataInfo(level2)}>${level2.content}</div>`
                             level2.children.forEach(level3 => {
-                                total += `<div class="content-menu-level3">${level3.content}</div>`
+                                total += `<div class="content-menu-item content-menu-level3" data-info=${getDataInfo(level3)}>${level3.content}</div>`
                             })
                             total +='</div>'
                         } else {
-                            total += `<div class="content-menu-level2">${level2.content}</div>`
+                            total += `<div class="content-menu-item content-menu-level2" data-info=${getDataInfo(level2)}>${level2.content}</div>`
                         }
                     })
                } else {
-                   total += `<div class="content-menu-level1">${level1.content}</div>`
+                   total += `<div class="content-menu-item content-menu-level1" :data-info=${getDataInfo(level1)}>${level1.content}</div>`
                }
                return total;
            },'') || '' 
            this.menuList = `<div class="content-menu">${menuList}</div>`
-           console.log(this.menuList,memu.list)
         },
         // tag 要查找哪个标签，level放在第几层
         // md不推荐超过3个层级
-        generatorMenuBody(menu,tag){
+        generatorMenuBody(menu,level){
+            const tag = `h${level}`;
             const menuList = menu.list || [];
-            const currentLevel = menu.currentLevel || 1;
             const content = this.content;
             const contentLen = content.length
+
+            // 开始遍历
             let index = 0;
-            // addflag
-            let addLevel = 0; //0 代表没添加过
+            let tagIndex = 0;
             do{
                const findStartIndex = content.indexOf(`<${tag}>`,index);
                const findEndIndex = content.indexOf(`</${tag}>`,findStartIndex);
                 if(findStartIndex !== -1 && findEndIndex !== -1) {
                     const menuItem = {
+                        // 自身属性
                         tag,
-                        level:currentLevel,
+                        level,
+                        tagIndex, // 该标签下的第几个，从0开始，用于定位
                         content:content.substring(findStartIndex + 4,findEndIndex),
                         start:findStartIndex,
                         end:findEndIndex,
-                        children:[]
+                        // 关系属性
+                        children:[],
+                        parent:null
                     }
-                    if(currentLevel === 1) {
-                        addLevel = addLevel > 1 ? addLevel : 1;
-                        // 直接作为第一级
+                    if(level === 1) {
                         menuList.push(menuItem)
-                    } else if(currentLevel === 2) {
-                        const findInsertIndex = menuList.findIndex(i => i.start > findEndIndex);
-                        menuItem.findInsertIndex = findInsertIndex;
-                        if(findInsertIndex !== -1) {
-                            // 直接作为第二级
-                            addLevel = addLevel > 2 ? addLevel : 2;
-                            (menuList[findInsertIndex - 1].children || []).push(menuItem)
-                        } else if(menuList.length) {
-                            // 如果有长度，则push到最后item的children中,作为第二级
-                            addLevel = addLevel > 2 ? addLevel : 2;
-                            (menuList[menuList.length - 1].children || []).push(menuItem)
+                    } else if(level === 2) {
+                        const oneLevelInsertIndex = menuList.findIndex(i => i.start > findEndIndex);
+                        if(oneLevelInsertIndex !== -1) {
+                            menuItem.parent = menuList[oneLevelInsertIndex - 1];
                         } else {
-                            // 否则，直接作为第一级
-                            menuList.push(menuItem)
+                            menuItem.parent = menuList.slice(-1)[0];
                         }
-                    } else if(currentLevel === 3) {
-                        const findInsertIndex = menuList.findIndex(i => i.start > findEndIndex);
-                        if(findInsertIndex !== -1) {
-                            const findLevel2InsertIndex = (menuList[findInsertIndex - 1].children || []).findIndex(i => i.start > findEndIndex);
-                            if(findLevel2InsertIndex !== -1 ) {
-                                // 直接作为第三级
-                                addLevel =  addLevel > 3 ? addLevel : 3;
-                                menuList[findInsertIndex - 1].children[findLevel2InsertIndex - 1].children.push(menuItem)
-                            } else if(menuList[findInsertIndex - 1].children.length){
-                                // 如果有长度，则push到最后item的children中,作为第三级
-                                addLevel =  addLevel > 3 ? addLevel : 3;
-                                menuList[findInsertIndex - 1].children[menuList[findInsertIndex - 1].children.length - 1].push(menuItem)
-                            } else {
-                                // 否则，直接作为第二级
-                                addLevel = addLevel > 2 ? addLevel : 2;
-                                menuList[findInsertIndex - 1].children.push(menuItem)
-                            }
-                        } else if(menuList.length) {
-                            // 如果有长度，则push到最后item的children中,作为第二级
-                            addLevel = addLevel > 2 ? addLevel : 2;
-                            (menuList[menuList.length - 1].children || []).push(menuItem)
+                        menuItem.parent.children.push(menuItem)
+                    } else if(level === 3) {
+                        let onewLevelInsertIndex = -1;
+                        let twoLevelInsertIndex = -1;
+                        menuList.some((i,oneIndex) => {
+                            i.children.findIndex((twoI,twoIndex) => {
+                                const flag = twoI.start > findEndIndex
+                                if(flag) {
+                                    onewLevelInsertIndex = oneIndex;
+                                    twoLevelInsertIndex = twoIndex
+                                }
+                                return flag;
+                            })
+                        })
+                        if(twoLevelInsertIndex !== -1) {
+                            menuItem.parent = menuList[onewLevelInsertIndex].children[twoLevelInsertIndex - 1];
                         } else {
-                            menuList.push(menuItem)
+                            menuItem.parent = menuList.slice(-1)[0].children.slice(-1)[0]
                         }
+                        menuItem.parent.children.push(menuItem)
                     }
                     index = findEndIndex
                 } else {
                     index = contentLen
                 }
+                tagIndex++;
            } while(index < contentLen)
-           if(addLevel) {
-               // addLevel说明遍历过第几个层级，下次遍历则新增1层级
-               menu.currentLevel = addLevel + 1
-           }
         },
         globalClickHandle(e){
+            console.log(e.target)
             if(e.target.nodeName === 'IMG') {
                 window.open(e.target.src)
+            } else if(e.target.dataset.info) {
+                const info = JSON.parse(e.target.dataset.info);
+                // h1...h3
+                if(info.type === 'query') {
+                    try {
+                        const queryItem = document.querySelectorAll(info.tag)[info.tagIndex];
+                        queryItem.scrollIntoView()
+                    } catch(err){}
+                    
+                } else if(info.type === 'top') {
+                   document.querySelector('#contentBody').scrollTop = 0;
+                }
             }
-            console.log(e)
-        }
+            console.log(e.target.dataset)
+        },
     }
 }
 </script>
+<style lang="less" scoped>
+.to-top {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    padding: 30px;
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border:1px solid #eee;
+    background: rgba(238, 238, 238,.5);
+}
+</style>
 <style lang="less">
     .content {
         white-space: break-spaces;
@@ -247,16 +268,27 @@ export default {
         font-size: 14px;
         padding:10px;
         border:1px solid #eee;
-        .content-menu-level1 {
+        .content-menu-item {
             cursor: pointer;
+            color: rgb(45, 140, 240);
+            &:hover {
+                color: rgba(45, 140, 240,.7);
+            }
         }
         .content-menu-level2 {
-            cursor: pointer;
             padding-left: 20px;
         }
+        .content-menu-level3 {
+            padding-left: 40px;
+        }
+
     }
+
     // reset
     ul,html,body,li {
         margin: 0;
+    }
+    ul {
+        line-height: 1;
     }
 </style>

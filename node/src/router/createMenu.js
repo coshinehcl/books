@@ -110,7 +110,7 @@ const updateMenuList = () => {
             }
         }
     }
-    // console.log('menulist',menulist)
+    console.log('menulist',menulist)
     let lastItemPath = []
     const formatMenuList = menulist.map(i=>i.split('/').reverse().slice(1,4)).reduce((menu,item)=>{
         // 三级目录：[demo1,options,commander]
@@ -146,14 +146,21 @@ const updateMenuList = () => {
                 }
             })
         } catch(err){}
-        // 排序二级目录：只将home放在最前面
-        const twoLevelRate = {
-            'home':100
+        // 排序二级目录：默认home是比重100.
+        const twoLevelRate = require(path.resolve(__dirname,'../sql/twoLevelRate.json'));
+        const getItemRate = (oneLevelItemTitle,twoLevelItemTitle) => {
+            if(twoLevelItemTitle === 'home'){
+                return 100;
+            } else if(twoLevelItemTitle === 'end') {
+                return -1;
+            } else {
+                return (twoLevelRate[oneLevelItemTitle] || {})[twoLevelItemTitle] || 0
+            }
         }
         formatMenuList.forEach(oneLevelItem => {
             (oneLevelItem.children || []).sort((l,r) => {
-                const leftV = twoLevelRate[l.title] || 0;
-                const rightV =  twoLevelRate[r.title] || 0;
+                const leftV = getItemRate(oneLevelItem.title,l.title);
+                const rightV = getItemRate(oneLevelItem.title,r.title);
                 if(leftV < rightV) {
                     return 1;
                 } else if(leftV === rightV) {

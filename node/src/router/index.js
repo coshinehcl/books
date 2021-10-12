@@ -15,16 +15,25 @@ const getImgPath = (url) => {
 const formatContentData = (data,key) => {
     // ![avatar](**/1.png)，替换为当前服务
     let _data = data.replace(new RegExp(/!\[avatar\]\(/,'g'),'![avatar]('+`http://localhost:${currentPORT}/img/`);
-    // 添加最后访问时间
-    try {
-        const readDetail = fs.readFileSync(path.resolve(__dirname,'../sql/readDetail.json'));
-        const parseReadDetail = JSON.parse(readDetail.toString() || '{}');
-        if(parseReadDetail[key]) {
-            _data +='\n\n\n'+ '最后访问时间：' + parseReadDetail[key].updateTime;
-            _data+='\n' + '访问量：' + parseReadDetail[key].visitTimes
-        }
-    } catch(err){}
-    return _data
+    // 添加额外信息
+    let extraData = ''
+    {
+        // 添加内容字数
+        extraData +='\n\n```js\n'
+        extraData += '本页字数：' + _data.length;
+        // 添加最后访问时间
+        try {
+            const readDetail = fs.readFileSync(path.resolve(__dirname,'../sql/readDetail.json'));
+            const parseReadDetail = JSON.parse(readDetail.toString() || '{}');
+            if(parseReadDetail[key]) {
+                extraData +='\n'+ '最后访问时间：' + parseReadDetail[key].updateTime;
+                extraData+='\n' + '访问量：' + parseReadDetail[key].visitTimes
+            }
+        } catch(err){}
+        extraData+='\n```\n'
+    }
+
+    return  _data + extraData
 }
 const currentPORT = 3333
 

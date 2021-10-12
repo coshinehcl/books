@@ -1,14 +1,14 @@
 <template>
     <div class="content-wrapper">
          <my-header class="content-header"></my-header>
-         <div class="content-body">
+         <div class="content-body" id="contentBody">
             <router-view></router-view>
          </div>
      </div>
 </template>
 <script>
 import myHeader from './myHeader.vue'
-console.log(myHeader)
+
 export default {
     name:'MyContent11',
     components:{

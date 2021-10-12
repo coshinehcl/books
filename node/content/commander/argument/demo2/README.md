@@ -49,8 +49,7 @@ Argument {
   _name: 'arg1'        // 参数名称
 }
 
-
-// 函数也和选项一样的，有以下
+// 有以下方法，都是为了配置上面的
 
 // 1、default：设置defaultValue
 default(value, description) {
@@ -100,8 +99,6 @@ function humanReadableArgName(arg) {
     ? '<' + nameOutput + '>'
     : '[' + nameOutput + ']';
 }
-
-// 总结：这部分和选项没什么区别，细节看选项部分
 ```
 
 ## 三、总结
