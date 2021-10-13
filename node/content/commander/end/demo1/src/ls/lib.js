@@ -80,7 +80,12 @@ myCommand
   .version(package.version, "-v,--version", "版本号")
   .description("查看所有的目录或查看指定父目录下的目录")
   .argument("[path]", "项目名称或路径")
-  .action(async (oneLevelDirName) => {
+  .option('-a,--all','获取所有的目录，并且用table来展示')
+  .action(async (oneLevelDirName,options) => {
+    if(options.all) {
+      dirHelp(getDirList())
+      return;
+    }
     let doOneLevel = true;
     let _oneLevelDirName = ''
     do {

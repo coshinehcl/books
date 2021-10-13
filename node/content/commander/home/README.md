@@ -292,4 +292,14 @@ postAction执行
 // 同时，我们也知道，子命令也会触发父亲的hooks
 ```
 
-## 三、总结
+## 三、其它
+```js
+
+// 相似产品
+// meow、argparse
+
+// 其它产品
+// 1、chalk、cli-color ：console.log带颜色
+// 2、ora、progress：进度条
+// 3、inquirer、prompts：友好输入
+```

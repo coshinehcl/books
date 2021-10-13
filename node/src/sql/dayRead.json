@@ -1,21 +1,7 @@
 {
-  "2021-9-11": {
-    "commander": 105,
-    "updateTime": "2021-10-11T15:48:54.787Z",
-    "iview": 2,
-    "babel": 5,
-    "js": 2,
-    "webpack-study": 4
-  },
-  "2021-9-12": {
-    "commander": 782,
-    "updateTime": "2021-10-12T10:06:40.716Z",
-    "js": 1,
-    "webpack-study": 3,
-    "babel": 1
-  },
-  "2021-9-13": {
-    "commander": 2,
-    "updateTime": "2021-10-13T06:40:00.955Z"
+  "2021-9-14": {
+    "vue": 13,
+    "updateTime": "2021-10-13T19:26:10.908Z",
+    "commander": 1
   }
 }

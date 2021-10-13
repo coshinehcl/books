@@ -2,6 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const got = require('got')
 const requiredDir = ['w','project','study','books'];
 const pathItem = (location) => ({
     name:location.split('/').slice(-1)[0],
@@ -62,7 +63,29 @@ const dirHelp = (dirList,fullPath = false) =>  {
     }))
     console.table(formatRet)
 }
+
+const getDate = ()=>{
+    const curDate = new Date();
+    return (curDate.getMonth() + 1) + '月' + curDate.getDate() + '号,礼拜' + curDate.getDay()
+}
+const getUserInfo = ()=>{
+    return os.userInfo()
+}
+
+const getTang = async ()=> {
+    const response = await got('https://v2.jinrishici.com/one.json')
+    const data = JSON.parse(response.body).data;
+    return {
+        title:data.origin.title,
+        author:data.origin.author,
+        contentOneLine:data.content,
+        content:data.origin.content
+    }
+}
 exports.getDirList = getDirList;
 exports.dirHelp = dirHelp;
 exports.getOneLevelDirList = oneLevelDirList;
 exports.getTwoLevelDirList = twoLevelDirList;
+exports.getDate = getDate;
+exports.getUserInfo = getUserInfo;
+exports.getTang = getTang;
