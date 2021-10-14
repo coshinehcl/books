@@ -5,8 +5,8 @@
     "desc": "home"
   },
   "commander.end.demo2": {
-    "visitTimes": 1,
-    "updateTime": "2021-10-13T19:23:57.459Z",
+    "visitTimes": 3,
+    "updateTime": "2021-10-14T06:20:57.578Z",
     "desc": "作业2"
   },
   "vue.lifestyle.demo3": {
@@ -68,5 +68,60 @@
     "visitTimes": 1,
     "updateTime": "2021-10-13T19:26:10.908Z",
     "desc": "demo3"
+  },
+  "commander.home": {
+    "visitTimes": 19,
+    "updateTime": "2021-10-14T06:24:19.094Z",
+    "desc": "首页"
+  },
+  "commander.command.demo1": {
+    "visitTimes": 33,
+    "updateTime": "2021-10-14T04:35:14.435Z",
+    "desc": "命令command"
+  },
+  "commander.command.demo2": {
+    "visitTimes": 4,
+    "updateTime": "2021-10-14T04:36:15.635Z",
+    "desc": "子命令注册方式"
+  },
+  "commander.command.demo3": {
+    "visitTimes": 3,
+    "updateTime": "2021-10-14T04:36:16.662Z",
+    "desc": "注册子命令参数详解.command()"
+  },
+  "commander.argument.demo1": {
+    "visitTimes": 4,
+    "updateTime": "2021-10-14T04:36:19.074Z",
+    "desc": "命令参数argument"
+  },
+  "commander.argument.demo2": {
+    "visitTimes": 33,
+    "updateTime": "2021-10-14T06:08:34.831Z",
+    "desc": "命令参数的addArgument用法"
+  },
+  "commander.options.demo1": {
+    "visitTimes": 5,
+    "updateTime": "2021-10-14T04:08:38.941Z",
+    "desc": "选项"
+  },
+  "commander.end.demo1": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-14T06:19:42.091Z",
+    "desc": "作业1"
+  },
+  "commander.action.demo1": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-14T06:21:29.781Z",
+    "desc": "命令动作action"
+  },
+  "commander.action.demo2": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-14T06:22:49.273Z",
+    "desc": "异步action"
+  },
+  "commander.action.demo3": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-14T06:22:50.000Z",
+    "desc": "action的钩子hook"
   }
 }

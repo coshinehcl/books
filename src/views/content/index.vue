@@ -9,10 +9,11 @@
 import draggable from 'vuedraggable'
 const MarkdownIt = require('markdown-it');
 const md = new MarkdownIt();
-import 'highlight.js/styles/paraiso-dark.css' // 导入代码高亮样式
+import 'prismjs/themes/prism.css'
 import Vue from 'vue'
 import bus from '@/util/bus.js'
 import test from './test.vue'
+const Prism = require('prismjs')
 export default {
     name:'content',
     filters:{
@@ -55,9 +56,6 @@ export default {
         bus.$on('getContent',this.getContent);
         this.$on('destroyed',()=>bus.$off('getContent',this.getContent))
     },
-    mounted(){
-         this.generatorMenu()
-    },
     methods:{
         getContent(){
             this.$request.get('/getContent',{
@@ -67,18 +65,35 @@ export default {
             }).then(res => {
                 this.content = md.render(res.data);
                 this.$store.commit('setCurrentContent',this.content);
-                this.generatorMenu()
+                this.generatorMenu();
+                // 处理code
+                this.parseCode()
             })
+        },
+        // 新技术，来解析code
+        parseCode(){
+            const _document = document.createDocumentFragment();
+            const div= document.createElement('div')
+            div.id ='_document'
+            div.innerHTML = this.content;
+            _document.appendChild(div);
+
+            // 查找code
+            const codeList =  _document.querySelectorAll('code');
+            codeList.forEach(i => {
+                i.innerHTML = Prism.highlight(i.innerHTML, Prism.languages.javascript, 'javascript');
+            })
+            this.content = _document.querySelector('#_document').innerHTML
+
         },
         generatorMenu(){
            const menu = {
                list:[],
                currentLevel:1 // 支持从hn开始
            };
-           let index = 0;
            // h1...h3
            // 这边要求文档，严格要求h1...h3格式嵌套来使用，这边才好解析
-           [1,2,3].forEach(i => this.generatorMenuBody(menu,i))
+           [1,2,3].forEach(i => this.parseTag(menu,i))
             console.log('menu.list',menu.list)
            // 根据menu生成内容
            const menuList = menu.list.reduce((total,level1)=> {
@@ -108,8 +123,8 @@ export default {
         },
         // tag 要查找哪个标签，level放在第几层
         // md不推荐超过3个层级
-        generatorMenuBody(menu,level){
-            const tag = `h${level}`;
+        parseTag(menu,level,_tag,startTag){
+            const tag = _tag ? _tag : `h${level}`;
             const menuList = menu.list || [];
             const content = this.content;
             const contentLen = content.length
@@ -118,7 +133,7 @@ export default {
             let index = 0;
             let tagIndex = 0;
             do{
-               const findStartIndex = content.indexOf(`<${tag}>`,index);
+               const findStartIndex = content.indexOf(`<${startTag || tag}>`,index);
                const findEndIndex = content.indexOf(`</${tag}>`,findStartIndex);
                 if(findStartIndex !== -1 && findEndIndex !== -1) {
                     const menuItem = {
@@ -126,7 +141,7 @@ export default {
                         tag,
                         level,
                         tagIndex, // 该标签下的第几个，从0开始，用于定位
-                        content:content.substring(findStartIndex + 4,findEndIndex),
+                        content:content.substring(findStartIndex + 2 + (startTag || tag).length,findEndIndex),
                         start:findStartIndex,
                         end:findEndIndex,
                         // 关系属性
