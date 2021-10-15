@@ -1,8 +1,13 @@
 <template>
-    <div @click="globalClickHandle">
-        <div v-html="menuList"></div>
-        <div id="content" class="content" v-html="content"></div>
-        <div data-info='{"type":"top"}' class="to-top">Top</div>
+    <div @click="globalClickHandle" class="content-body">
+        <div v-if="content">
+            <div v-html="menuList" class="menu-list"></div>
+            <div id="content" class="content" v-html="content"></div>
+            <div data-info='{"type":"top"}' class="to-top">Top</div>
+        </div>
+        <div v-else>
+            Hello word!
+        </div>
     </div>
 </template>
 <script>
@@ -14,6 +19,8 @@ import Vue from 'vue'
 import bus from '@/util/bus.js'
 import test from './test.vue'
 const Prism = require('prismjs')
+// const loadLanguages = require('prismjs/components/');
+// loadLanguages(['js']);
 export default {
     name:'content',
     filters:{
@@ -73,15 +80,21 @@ export default {
         // 新技术，来解析code
         parseCode(){
             const _document = document.createDocumentFragment();
-            const div= document.createElement('div')
+            const div= document.createElement('pre')
             div.id ='_document'
             div.innerHTML = this.content;
             _document.appendChild(div);
 
             // 查找code
             const codeList =  _document.querySelectorAll('code');
+            console.log('Prism',Prism.languages)
             codeList.forEach(i => {
-                i.innerHTML = Prism.highlight(i.innerHTML, Prism.languages.javascript, 'javascript');
+                // 先要处理下内容,注意这里要获取str。
+                let str = i.innerText;
+                str = (Prism.highlight(str, Prism.languages.javascript,'javascript'));
+                str = str.replace(/&amp;lt;/g,"<");
+                str = str.replace(/&amp;gt;/g,">");
+                i.innerHTML = str;
             })
             this.content = _document.querySelector('#_document').innerHTML
 
@@ -101,21 +114,21 @@ export default {
                    return `${JSON.stringify({tag:item.tag,tagIndex:item.tagIndex,type:'query'})}`
                }
                if(level1.children.length) {
-                    total +=`<div class="content-menu-item content-menu-level1" data-info=${getDataInfo(level1)}>${level1.content}</div>`
+                    total +=`<div class="content-menu-item content-menu-level1" data-info=${getDataInfo(level1)} title="${level1.content}">${level1.content}</div>`
                     level1.children.forEach(level2 => {
                         if(level2.children.length) {
                             total +='<div>';
-                            total +=`<div class="content-menu-item content-menu-level2" data-info=${getDataInfo(level2)}>${level2.content}</div>`
+                            total +=`<div class="content-menu-item content-menu-level2" data-info=${getDataInfo(level2)} title="${level2.content}">${level2.content}</div>`
                             level2.children.forEach(level3 => {
-                                total += `<div class="content-menu-item content-menu-level3" data-info=${getDataInfo(level3)}>${level3.content}</div>`
+                                total += `<div class="content-menu-item content-menu-level3" data-info=${getDataInfo(level3)} title="${level3.content}">${level3.content}</div>`
                             })
                             total +='</div>'
                         } else {
-                            total += `<div class="content-menu-item content-menu-level2" data-info=${getDataInfo(level2)}>${level2.content}</div>`
+                            total += `<div class="content-menu-item content-menu-level2" data-info=${getDataInfo(level2)} title="${level2.content}">${level2.content}</div>`
                         }
                     })
                } else {
-                   total += `<div class="content-menu-item content-menu-level1" :data-info=${getDataInfo(level1)}>${level1.content}</div>`
+                   total += `<div class="content-menu-item content-menu-level1" :data-info=${getDataInfo(level1)} title="${level1.content}">${level1.content}</div>`
                }
                return total;
            },'') || '' 
@@ -195,14 +208,16 @@ export default {
                 if(info.type === 'query') {
                     try {
                         const queryItem = document.querySelectorAll(info.tag)[info.tagIndex];
-                        queryItem.scrollIntoView()
+                        queryItem.scrollIntoView({behavior:'smooth'})
                     } catch(err){}
                     
                 } else if(info.type === 'top') {
                    document.querySelector('#contentBody').scrollTop = 0;
                 }
+            } else if(['H2','H3','H4','H5'].includes(e.target.nodeName)) {
+                document.querySelector('#contentBody').scrollTop = 0;
             }
-            console.log(e.target.dataset)
+            console.log(e)
         },
     }
 }
@@ -222,6 +237,14 @@ export default {
     border-radius: 50px;
     border:1px solid #eee;
     background: rgba(238, 238, 238,.5);
+}
+.content-body {
+    font-size: 14px;
+}
+.menu-list {
+    position: fixed;
+    top:100px;
+    right: 20px;
 }
 </style>
 <style lang="less">
@@ -267,8 +290,14 @@ export default {
         background: rgba(238, 238, 238,.5);
         border-radius: 10px;
     }
-    p,pre {
-        font-size: 14px;
+    // code {
+    //    font-size: 14px !important; 
+    // }
+    h1,h2,h3,h4,h5 {
+        cursor: pointer;
+    }
+    p,pre,code {
+        font-size: 14px !important;
     }
     img {
         width:100%;
@@ -278,6 +307,7 @@ export default {
             content:'目录结构';
             display: block;
             padding-bottom: 20px;
+            font-weight: bold;
         }
         margin-bottom: 20px;
         font-size: 14px;
@@ -289,6 +319,10 @@ export default {
             &:hover {
                 color: rgba(45, 140, 240,.7);
             }
+            max-width: 400px;
+            white-space:nowrap;//不换行
+            overflow: hidden;//超出隐藏
+            text-overflow: ellipsis;//变成...
         }
         .content-menu-level2 {
             padding-left: 20px;

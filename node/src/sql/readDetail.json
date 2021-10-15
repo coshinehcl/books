@@ -1,12 +1,12 @@
 {
   "vue.home": {
-    "visitTimes": 1,
-    "updateTime": "2021-10-13T19:23:11.941Z",
+    "visitTimes": 10,
+    "updateTime": "2021-10-14T14:43:00.119Z",
     "desc": "home"
   },
   "commander.end.demo2": {
-    "visitTimes": 3,
-    "updateTime": "2021-10-14T06:20:57.578Z",
+    "visitTimes": 5,
+    "updateTime": "2021-10-15T07:57:17.461Z",
     "desc": "作业2"
   },
   "vue.lifestyle.demo3": {
@@ -70,58 +70,288 @@
     "desc": "demo3"
   },
   "commander.home": {
-    "visitTimes": 19,
-    "updateTime": "2021-10-14T06:24:19.094Z",
+    "visitTimes": 155,
+    "updateTime": "2021-10-15T18:33:25.808Z",
     "desc": "首页"
   },
   "commander.command.demo1": {
-    "visitTimes": 33,
-    "updateTime": "2021-10-14T04:35:14.435Z",
+    "visitTimes": 58,
+    "updateTime": "2021-10-15T08:05:31.135Z",
     "desc": "命令command"
   },
   "commander.command.demo2": {
-    "visitTimes": 4,
-    "updateTime": "2021-10-14T04:36:15.635Z",
+    "visitTimes": 19,
+    "updateTime": "2021-10-15T08:05:32.445Z",
     "desc": "子命令注册方式"
   },
   "commander.command.demo3": {
-    "visitTimes": 3,
-    "updateTime": "2021-10-14T04:36:16.662Z",
+    "visitTimes": 10,
+    "updateTime": "2021-10-15T07:57:48.708Z",
     "desc": "注册子命令参数详解.command()"
   },
   "commander.argument.demo1": {
-    "visitTimes": 4,
-    "updateTime": "2021-10-14T04:36:19.074Z",
+    "visitTimes": 11,
+    "updateTime": "2021-10-15T08:05:06.721Z",
     "desc": "命令参数argument"
   },
   "commander.argument.demo2": {
-    "visitTimes": 33,
-    "updateTime": "2021-10-14T06:08:34.831Z",
+    "visitTimes": 35,
+    "updateTime": "2021-10-15T07:57:42.035Z",
     "desc": "命令参数的addArgument用法"
   },
   "commander.options.demo1": {
-    "visitTimes": 5,
-    "updateTime": "2021-10-14T04:08:38.941Z",
+    "visitTimes": 11,
+    "updateTime": "2021-10-15T08:05:11.391Z",
     "desc": "选项"
   },
   "commander.end.demo1": {
-    "visitTimes": 1,
-    "updateTime": "2021-10-14T06:19:42.091Z",
+    "visitTimes": 2,
+    "updateTime": "2021-10-15T07:57:19.140Z",
     "desc": "作业1"
   },
   "commander.action.demo1": {
-    "visitTimes": 1,
-    "updateTime": "2021-10-14T06:21:29.781Z",
+    "visitTimes": 2,
+    "updateTime": "2021-10-15T07:57:34.444Z",
     "desc": "命令动作action"
   },
   "commander.action.demo2": {
-    "visitTimes": 1,
-    "updateTime": "2021-10-14T06:22:49.273Z",
+    "visitTimes": 2,
+    "updateTime": "2021-10-15T07:57:29.833Z",
     "desc": "异步action"
   },
   "commander.action.demo3": {
-    "visitTimes": 1,
-    "updateTime": "2021-10-14T06:22:50.000Z",
+    "visitTimes": 2,
+    "updateTime": "2021-10-15T07:57:25.683Z",
     "desc": "action的钩子hook"
+  },
+  "commander.options.demo2": {
+    "visitTimes": 7,
+    "updateTime": "2021-10-15T08:05:10.673Z",
+    "desc": "选项默认值"
+  },
+  "vue.ast.demo1": {
+    "visitTimes": 3,
+    "updateTime": "2021-10-14T14:43:01.322Z",
+    "desc": "demo1"
+  },
+  "vue.ast.demo3": {
+    "visitTimes": 2,
+    "updateTime": "2021-10-14T14:43:03.378Z",
+    "desc": "demo3"
+  },
+  "vue.component.demo1": {
+    "visitTimes": 5,
+    "updateTime": "2021-10-14T14:43:05.771Z",
+    "desc": "demo1"
+  },
+  "vue.ast.demo2": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-14T14:43:02.395Z",
+    "desc": "demo2"
+  },
+  "vue.component.demo3": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-14T14:43:06.621Z",
+    "desc": "demo3"
+  },
+  "vue.directive.demo1": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-14T14:43:08.114Z",
+    "desc": "demo1"
+  },
+  "vue.directive.demo2": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-14T14:43:09.028Z",
+    "desc": "demo2"
+  },
+  "vue.directive.demo3": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-14T14:43:09.944Z",
+    "desc": "demo3"
+  },
+  "vue.extend.demo1": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-14T14:43:14.627Z",
+    "desc": "demo1"
+  },
+  "vue.extend.demo2": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-14T14:43:15.750Z",
+    "desc": "demo2"
+  },
+  "vue.extend.demo3": {
+    "visitTimes": 2,
+    "updateTime": "2021-10-14T14:43:28.229Z",
+    "desc": "demo3"
+  },
+  "commander.options.demo3": {
+    "visitTimes": 3,
+    "updateTime": "2021-10-15T08:05:09.828Z",
+    "desc": "变长参数"
+  },
+  "commander.options.demo4": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-14T14:43:45.149Z",
+    "desc": "addOption方式配置选项"
+  },
+  "commander.options.demo5": {
+    "visitTimes": 2,
+    "updateTime": "2021-10-15T07:57:38.368Z",
+    "desc": "自定义选项处理"
+  },
+  "everyday.home": {
+    "visitTimes": 32,
+    "updateTime": "2021-10-15T18:34:50.848Z",
+    "desc": "home"
+  },
+  "everyday.needStudy.demo1": {
+    "visitTimes": 14,
+    "updateTime": "2021-10-15T18:42:38.638Z",
+    "desc": "demo1"
+  },
+  "js": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-15T07:21:24.002Z",
+    "desc": "一、三种基础数据结构"
+  },
+  "rollup.home": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-15T07:21:25.760Z",
+    "desc": "home"
+  },
+  "rollup.test.demo1": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-15T07:21:26.920Z",
+    "desc": "rollup运行测试"
+  },
+  "rollup.test.demo2": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-15T07:21:27.501Z",
+    "desc": "配置文件"
+  },
+  "rollup.end.demo1": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-15T07:21:28.688Z",
+    "desc": "demo1"
+  },
+  "rollup.end.demo2": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-15T07:21:29.563Z",
+    "desc": "demo2"
+  },
+  "webpack-study.entry.demo1": {
+    "visitTimes": 4,
+    "updateTime": "2021-10-15T07:57:59.759Z",
+    "desc": "数组和对象的区别3"
+  },
+  "webpack-study.entry.demo2": {
+    "visitTimes": 2,
+    "updateTime": "2021-10-15T07:25:36.243Z",
+    "desc": "entry的对象格式"
+  },
+  "everyday.needStudy.demo2": {
+    "visitTimes": 6,
+    "updateTime": "2021-10-15T18:34:56.299Z",
+    "desc": "demo2"
+  },
+  "everyday.end.demo1": {
+    "visitTimes": 10,
+    "updateTime": "2021-10-15T18:34:55.543Z",
+    "desc": "demo1"
+  },
+  "everyday.end.demo2": {
+    "visitTimes": 9,
+    "updateTime": "2021-10-15T08:05:35.768Z",
+    "desc": "demo2"
+  },
+  "webpack-study.entry.demo3": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-15T07:25:36.978Z",
+    "desc": "entry函数形式"
+  },
+  "webpack-study.mode.demo1": {
+    "visitTimes": 2,
+    "updateTime": "2021-10-15T07:58:28.112Z",
+    "desc": "mode"
+  },
+  "webpack-study.module.demo1": {
+    "visitTimes": 4,
+    "updateTime": "2021-10-15T07:58:30.297Z",
+    "desc": "noparse"
+  },
+  "webpack-study.module.demo2": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-15T07:25:43.384Z",
+    "desc": "module"
+  },
+  "commander.help.demo1": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-15T07:57:20.191Z",
+    "desc": "help帮助信息"
+  },
+  "commander.version.demo1": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-15T07:57:36.336Z",
+    "desc": "版本# 版本"
+  },
+  "webpack-study.output.demo1": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-15T07:58:32.831Z",
+    "desc": "这里是通用配置"
+  },
+  "webpack-study.output.demo3": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-15T07:58:33.598Z",
+    "desc": "这里是主chunk相关的配置"
+  },
+  "webpack-study.output.demo4": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-15T07:58:34.777Z",
+    "desc": "异步chunk相关配置"
+  },
+  "webpack-study.output.demo5": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-15T07:58:35.827Z",
+    "desc": "静态资源与assetModuleFilename"
+  },
+  "webpack-study.output.demo6": {
+    "visitTimes": 6,
+    "updateTime": "2021-10-15T08:00:48.862Z",
+    "desc": "output其他配置"
+  },
+  "vuepress.base.demo1": {
+    "visitTimes": 4,
+    "updateTime": "2021-10-15T18:44:23.473Z",
+    "desc": "demo1"
+  },
+  "vuepress.home": {
+    "visitTimes": 6,
+    "updateTime": "2021-10-15T18:44:24.324Z",
+    "desc": "home"
+  },
+  "vuepress.config.demo1": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-15T18:43:08.017Z",
+    "desc": "配置"
+  },
+  "vuepress.config.demo2": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-15T18:43:10.603Z",
+    "desc": "demo2"
+  },
+  "vuepress.base.demo2": {
+    "visitTimes": 2,
+    "updateTime": "2021-10-15T18:43:18.089Z",
+    "desc": "demo2"
+  },
+  "vuepress.end.demo1": {
+    "visitTimes": 2,
+    "updateTime": "2021-10-15T18:43:16.825Z",
+    "desc": "demo1"
+  },
+  "vuepress.end.demo2": {
+    "visitTimes": 1,
+    "updateTime": "2021-10-15T18:43:15.983Z",
+    "desc": "demo2"
   }
 }

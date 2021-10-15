@@ -3,6 +3,11 @@
 
 # production  打包文件
 /build
+/dist
+
+# 临时文件或缓存文件
+.temp
+.cache
 
 # misc 
 .DS_Store

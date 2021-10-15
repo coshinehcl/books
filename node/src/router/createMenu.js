@@ -16,12 +16,15 @@ const updateMenuList = () => {
         console.log(err)
     }
     const menulist = []
+    const contentDir = path.resolve(__dirname,'../../content')
     const readDir = (entry)=>{
         const dirInfo = fs.readdirSync(entry);
         dirInfo.forEach(item => {
             const location = path.join(entry,item)
             const info = fs.statSync(location)
-            if(info.isDirectory()){
+            console.log()
+            const relativeContentLen = path.relative(location,contentDir).split('/').length
+            if(info.isDirectory() && relativeContentLen <= 3){
                 if(['src','dist','node_modules'].every(i => location.indexOf(i) === -1)){
                     readDir(location)
                 }
@@ -32,7 +35,7 @@ const updateMenuList = () => {
             }
         })
     }
-    readDir(path.resolve(__dirname,'../../content'));
+    readDir(contentDir);
     // 判断是否是相同的一级目录
     const isSameOneLevel = (lastItemPath,curItemPath) => {
         // 只需要对比最后一位是不是一样就行
@@ -110,7 +113,7 @@ const updateMenuList = () => {
             }
         }
     }
-    console.log('menulist',menulist)
+    // console.log('menulist',menulist)
     let lastItemPath = []
     const formatMenuList = menulist.map(i=>i.split('/').reverse().slice(1,4)).reduce((menu,item)=>{
         // 三级目录：[demo1,options,commander]
@@ -133,10 +136,17 @@ const updateMenuList = () => {
             const data = fs.readFileSync(path.resolve(__dirname,'../sql/readStar.json'));
             // 更新
             const dataParse = JSON.parse(data || '{}') || {};
+            const getItemRate = (title) =>  {
+                if(title === 'everyday') {
+                    return Infinity;
+                } else {
+                    return dataParse[title] || 0
+                }
+            }
             // 从大到小排序，只排序一级目录
             formatMenuList.sort((l,r) => {
-                const leftV = dataParse[l.title] || 0;
-                const rightV =  dataParse[r.title] || 0;
+                const leftV = getItemRate(l.title);
+                const rightV =  getItemRate(r.title);
                 if(leftV < rightV) {
                     return 1;
                 } else if(leftV === rightV) {
