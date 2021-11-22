@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "start": "webpack -c ./webapck.config.js"
+  },
+  "name": "demo2",
+  "description": "## 一、介绍",
+  "version": "1.0.0",
+  "main": "webapck.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.6.0"
+  }
+}

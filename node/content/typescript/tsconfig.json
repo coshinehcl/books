@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "skipLibCheck":true,
+        "strictNullChecks": true
+    },
+    "exclude": [
+        "node_modules",
+        "**/d.ts"
+      ]
+}

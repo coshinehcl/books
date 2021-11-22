@@ -39,16 +39,78 @@ program
 .version(require('../package.json').version,'-v,--version','version')
 .option('-n,--number [num]','创建demo个数',2)
 .option('-o,--open','code打开books')
+.option('-d,--demo [num]','新增demo,格式为vue reactive 4,代表需要生成4个demo')
 .argument('[dir...]','目录字符串，格式为：第一个是父目录名,后续为子目录名')
 .description('自动创建books目录,支持原有基础上添加,已有目录则忽略添加')
 .showHelpAfterError()
 .action(async (dirList,options)=>{
     const contentDir = path.resolve(__dirname,'../../../../');
-    if(!dirList.length) {
+    console.log('ok')
+    if(!dirList.length && !options.demo) {
         if(options.open) {
             openBooks(contentDir,options.open)
         }
-    } else {
+    } else if(options.demo){
+        console.log('com')
+        let demoNum = parseInt(options.demo) || 1;
+        
+        let parentDirName = dirList[0];
+        let childDirName =  dirList[1];
+        
+        if(dirList.length < 2) {
+            // 支持获取当前路径,需要在content环境内
+            const cwd = process.cwd().split('/');
+            const contentIndex = cwd.findIndex(i => i === 'content')
+            parentDirName = cwd[contentIndex + 1];
+            childDirName =  cwd[contentIndex + 2];
+            if(!parentDirName || !childDirName) {
+                return console.log('创建demo需要在该二级目录下')
+            }
+        }
+        
+        const parentDir = path.resolve(contentDir,parentDirName);
+        const childDir =  path.resolve(parentDir,childDirName);
+        // 信息展示
+        console.log('操作目录：',childDir)
+        console.log('新增demo数：',demoNum)
+        // 信息确认
+        const isConfirm = await confirmQuestion('确认以上信息是否正确');
+
+        if(isConfirm) {
+            if(!fs.existsSync(parentDir)) {
+                fs.mkdirSync(parentDir)
+                // 一级目录下，需要一个home来做导读
+                fs.mkdirSync(path.resolve(parentDir,'home'))
+                fs.writeFile(path.resolve(parentDir,'home/README.md'),readMeTemplate(`home`),()=>{});
+                // 添加end
+                fs.mkdirSync(path.resolve(parentDir,'end'))
+                fs.writeFile(path.resolve(parentDir,'end/README.md'),readMeTemplate(`end`),()=>{});
+            }
+            if(!fs.existsSync(childDir)) {
+                fs.mkdirSync(childDir)
+            }
+            // 创建demo
+            const alreadyDemoNum = fs.readdirSync(childDir).reduce((total,cur) => {
+                const location = path.join(childDir,cur)
+                const info = fs.statSync(location)
+                if(info.isDirectory() && cur.includes('demo')){
+                    total+=1;
+                }
+                return total
+            },0)
+            console.log('已经存在demo数：',alreadyDemoNum)
+            new Array(demoNum).fill('').forEach((i,index) => {
+                const name = `demo${index+1 + alreadyDemoNum}`;
+                const demoDir = path.resolve(childDir,name);
+                fs.mkdirSync(demoDir);
+                // 每个demo下，创建src/index.js和README.md
+                fs.mkdirSync(path.resolve(demoDir,'src'));
+                fs.writeFile(path.resolve(demoDir,'src/index.js'),'',()=>{})
+                fs.writeFile(path.resolve(demoDir,'README.md'),readMeTemplate(name),()=>{});
+            })
+            console.log('创建成功')
+        }
+    }else {
         let demoNum = parseInt(options.number);
         const parentDir = path.resolve(contentDir,dirList[0]);
         const childDirList = dirList.slice(1).map(i => path.resolve(parentDir,i));

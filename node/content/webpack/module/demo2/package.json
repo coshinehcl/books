@@ -1,0 +1,5 @@
+{
+    "scripts":{
+        "start":"webpack -c ./webapck.config.js"
+    }
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        {{color}}
+        <div :title="color"></div>
+        <input v-model="inputValue">
+        <child1 :num="parentNum">       
+            sda{{color}}
+            <template v-slot:header>
+                ad{{color}}
+            </template>
+            <template v-slot:footer="t">
+                {{t}}{{color}}
+            </template>
+            2
+        </child1>
+        <div>
+            <div>{{color}}</div>
+        </div>
+    </div>
+</body>
+<script type="module">
+    import Vue from './vue.esm.browser.js';
+    const vm = new Vue({
+        name:'hcl',
+        components:{
+            child1:{
+                name:'child1',
+                props:{
+                   num:{
+                    type:Number,
+                    default:0,
+                   }
+                },
+                template:`
+                    <div>
+                        <slot name="header">123</slot>
+                        <slot name="default">ad</slot>  
+                        <slot name="footer" :user="{num}"></slot>
+    
+                    </div>
+                `
+            }
+        },
+        watch:{
+            'color'(newV){
+                console.log('ok',newV)
+            },
+            'data1':{
+                handler(){
+                    console.log('handler',new Date().getSeconds())
+                },
+            }
+        },
+        computed:{
+
+            xx(){
+                return this.yy
+            },
+            yy(){
+                return this.color;
+            },
+        },
+        data(){
+            return {
+                inputValue:1,
+                color:'red',
+                data1:{x:1,y:[]},
+                list:[1,{x:2}],
+                name1x:{},
+                parentNum:1,
+                x:{}
+            }
+        },
+        created(){
+            setTimeout(() => {
+               this.color ='blue'
+            }, 10000);
+        },
+        mounted(){
+            console.log('mounted')
+        }
+    })
+    vm.$mount('#app')
+</script>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        {{color}}
+        {{x}}
+    </div>
+</body>
+<script type="module">
+    import Vue from './vue.esm.browser.js';
+    const vm = new Vue({
+        name:"hcl",
+        data(){
+            return {
+                color:'red', // 测试value是基本类型
+                //
+                x:[],
+                list:[1,{x:2}], // 测试value是引用类型
+                persion:{ // 测试多层的引用类型
+                    name:'hcl',
+                    details:{
+                        age:20,
+                        job:'web'
+                    }
+                },
+                // 测试deep
+                persion1:{
+                    name1:'hcl1',
+                    details1:{
+                        age1:10,
+                        job1:'web1'
+                    }
+                }
+            }
+        },
+        // 这部分用于测试Watcher
+        watch:{
+            persion:{
+                handler(newV){
+                    console.log(newV)
+                },
+            },
+            persion1:{
+                handler(newV){
+                    console.log(newV)
+                },
+                deep:true
+            },
+            color(newV){
+                console.log('cb',newV)
+            },
+            list:{
+                handler(newV){
+                    console.log('cb',newV)
+                },
+                deep:true
+            },
+        },
+        created(){
+
+            setTimeout(() => {
+                this.x = [{name:1}]
+            }, 4000);
+        }
+    })
+    vm.$mount('#app')
+    // 测试方式
+    // 我们在Observer() 和 defineReactive() 打印一些log出来
+
+    // 格式为：console.log('当前在哪里',当前操作,关联的dep)
+
+    // console.log('Observer',value,this.dep)
+    // console.log('defineReactive',key,dep)
+</script>
+</html>

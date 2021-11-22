@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "start": "webpack -c ./webapck.config.js"
+  },
+  "name": "demo4",
+  "description": "## 一、css-loader",
+  "version": "1.0.0",
+  "main": "webapck.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "css-loader": "^6.5.0",
+    "style-loader": "^3.3.1",
+    "vue-loader": "^15.9.8"
+  }
+}

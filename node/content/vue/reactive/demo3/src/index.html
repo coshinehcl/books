@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        {{xx}}
+        {{persion}}
+        <child1 v-if="need" :persion1="persion" :color="color" :persion2="persion"></child1>
+    </div>
+    <div id="app1"></div>
+</body>
+<script type="module">
+    import Vue from './vue.esm.browser.js';
+    const vm = new Vue({
+        name:"hcl",
+        components:{
+            child1:{
+                props:{
+                    persion1:{
+                        type:Object,
+                        default:function(){
+                            // console.log('default',this,this.x)
+                            return {}
+                        }
+                    },
+                    color:'',
+                    other:{
+                        type:Object,
+                        default:function(){
+                            console.log('default',this,this.x)
+                            return {}
+                        }
+                    },
+                },
+                data(){
+                    return {
+                        x:{}
+                    }
+                },
+                components:{
+                    
+                    child2:{
+                        props:{
+                            color:''
+                        },
+                        template:'<div>{{color}}</div>',
+                        beforeDestroy(){
+                            console.log('chil2 beforeDestroy')
+                        },
+                        destroyed(){
+                            console.log('child2 destroyed')
+                        }
+                    },
+
+                },
+                template:`
+                    <div>{{persion1.name}}{{color}}{{other}}<child2 :color="color"></child2></div>
+                `,
+                created(){
+                    setTimeout(() => {
+                        console.log('set-----')
+                        this.persion1.details = {'child1':2}
+                    }, 2000);
+                  
+                },
+                beforeUpdate(){
+                    console.log('x child beforeUpate')
+                },
+                mounted(){
+                    console.log('x child mounted')
+                },
+                updated(){
+                    console.log('x child updated')
+                },
+                beforeDestroy(){
+                            console.log('chil1 beforeDestroy')
+                        },
+                destroyed(){
+                    console.log('child1 destroyed')
+                }
+            },
+
+            
+        },
+        data(){
+            return {
+                persion:{
+                    name:'hcl',
+                    details:{
+                        age:20,
+                        job:'web'
+                    }
+                },
+                color:'red',
+                need:true,
+                xx:{},
+                list:[{x:1}]
+            }
+        },
+        watch:{
+            persion:{
+                handler(newV){
+                    console.log('parent watch',newV)
+                },
+                deep:true
+            },
+            list(){
+                console.log('list watch')
+            }
+        },
+        created(){
+            setTimeout(() => {
+                // this.persion.name ='hcl2'
+                // this.need = false
+                this.list.push(2);
+            }, 5000);
+            console.log('x parent created')
+        },
+        beforeUpdate(){
+            console.log('x parent beforeUpate')
+        },
+        updated(){
+            console.log('x parent updated')
+            // setTimeout(() => {
+            //     console.log('new Data')
+            //     this.xx = {}
+            // }, 1000);
+            
+        },
+        mounted(){
+                    console.log('x parent mounted')
+                },
+    })
+    // vm.$mount('#app');
+
+
+</script>
+</html>

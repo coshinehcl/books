@@ -1,0 +1,12 @@
+{
+  "name": "demo1",
+  "version": "1.0.0",
+  "description": "## 一、介绍",
+  "main": "./main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

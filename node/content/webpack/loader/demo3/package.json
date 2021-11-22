@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "start": "webpack -c ./webapck.config.js"
+  },
+  "name": "demo3",
+  "description": "## 一、介绍",
+  "version": "1.0.0",
+  "main": "jsloader1.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "css-loader": "^6.5.0",
+    "style-loader": "^3.3.1"
+  }
+}
